@@ -1,4 +1,4 @@
 package com.fever.demo.domain.port;
 
-public interface EventsRepository {
+public interface EventsDBRepository {
 }
