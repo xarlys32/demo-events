@@ -3,7 +3,7 @@ package com.fever.demo.infrastructure.repository;
 import com.fever.demo.config.Constants;
 import com.fever.demo.domain.model.Events;
 import com.fever.demo.domain.port.EventsProviderRepository;
-import com.fever.demo.infrastructure.entity.XMLEvent;
+import com.fever.demo.infrastructure.entity.PlanList;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
@@ -13,6 +13,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 import java.time.Duration;
@@ -35,16 +36,33 @@ public class EventsProviderRepositoryImpl implements EventsProviderRepository {
             .baseUrl(Constants.PROVIDER_BASE_URL).build();
 
     @Scheduled(fixedRate = 10000)
-    public Optional<Events> lastEventsList() {
+    public void lastEventsList() {
         webClient.get()
                 .uri(Constants.PROVIDER_EVENT_ENDPOINT)
+                .accept(MediaType.valueOf(MediaType.TEXT_XML_VALUE))
                 .retrieve()
-                .bodyToFlux()
-                .subscribe(this::processEvent);
-        return Optional.of(new Events());
+                .onStatus(status -> status.isError(),
+                        response -> response.bodyToMono(String.class)
+                                .flatMap(errorBody -> {
+                                    // Log or handle the error response body here
+                                    return Mono.error(new RuntimeException("Error response: " + errorBody));
+                                })
+                )
+                .bodyToFlux(PlanList.class)
+                .onErrorMap((throwable) -> {
+                    if (throwable instanceof RuntimeException) {
+                        return new Exception("API call failed", throwable);
+                    } else {
+                        return throwable;
+                    }
+                })
+                .subscribe(this::processEvent,
+                        error -> {
+                            System.err.println("Final error: " + error.getMessage());
+                        });
     }
 
-    private void processEvent(Object xmlEvent) {
+    private void processEvent(PlanList xmlEvent) {
         System.out.println("Event: "+xmlEvent);
     }
 }
