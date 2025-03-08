@@ -23,8 +23,5 @@
 hs_err_pid*
 replay_pid*
 
-*.xml
-*.name
-*.idea
-*.lock
-*.bin
+/.idea/
+/.gradle/
