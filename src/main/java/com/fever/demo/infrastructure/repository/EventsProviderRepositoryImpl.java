@@ -1,9 +1,8 @@
 package com.fever.demo.infrastructure.repository;
 
 import com.fever.demo.config.Constants;
-import com.fever.demo.domain.model.Events;
 import com.fever.demo.domain.port.EventsProviderRepository;
-import com.fever.demo.infrastructure.entity.PlanList;
+import com.fever.demo.infrastructure.entity.Xml.PlanList;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
@@ -17,7 +16,6 @@ import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Component
