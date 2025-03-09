@@ -1,10 +1,13 @@
 package com.fever.demo.infrastructure.entity.Document;
 
-import com.fever.demo.infrastructure.entity.Xml.Zone;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 public class PlanDocument {
     @Field(name = "plan_start_date")
     private String planStartDate;
@@ -25,5 +28,5 @@ public class PlanDocument {
     private String soldOut;
 
     @Field(name = "zone")
-    private List<Zone> zones;
+    private List<ZoneDocument> zones;
 }

@@ -1,7 +1,11 @@
 package com.fever.demo.infrastructure.entity.Document;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+@Data
+@AllArgsConstructor
 public class ZoneDocument {
     @Field(name = "zone_id")
     private String zoneId;

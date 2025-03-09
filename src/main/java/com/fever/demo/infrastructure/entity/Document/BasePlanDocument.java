@@ -1,11 +1,15 @@
 package com.fever.demo.infrastructure.entity.Document;
 
-import com.fever.demo.infrastructure.entity.Xml.Plan;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 @Document(collection = "eventsTest")
 public class BasePlanDocument {
 
@@ -22,6 +26,6 @@ public class BasePlanDocument {
     private String title;
 
     @Field(name = "plan")
-    private List<Plan> plans;
+    private List<PlanDocument> plans;
 
 }

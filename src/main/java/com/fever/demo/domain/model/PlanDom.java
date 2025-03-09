@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Plan {
+public class PlanDom {
     private String planStartDate;
 
     private String planEndDate;
@@ -21,5 +21,5 @@ public class Plan {
 
     private String soldOut;
 
-    private List<Zone> zones;
+    private List<ZoneDom> zoneDoms;
 }

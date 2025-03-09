@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Zone {
+public class ZoneDom {
     private String zoneId;
 
     private String capacity;

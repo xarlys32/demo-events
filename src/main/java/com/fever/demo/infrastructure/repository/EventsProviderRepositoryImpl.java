@@ -2,10 +2,13 @@ package com.fever.demo.infrastructure.repository;
 
 import com.fever.demo.config.Constants;
 import com.fever.demo.domain.port.EventsProviderRepository;
+import com.fever.demo.domain.usecases.EventUsesCases;
+import com.fever.demo.infrastructure.adapter.EventXmlToDomAdapter;
 import com.fever.demo.infrastructure.entity.Xml.PlanList;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -20,6 +23,12 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class EventsProviderRepositoryImpl implements EventsProviderRepository {
+
+    @Autowired
+    private EventUsesCases eventUsesCases;
+
+    @Autowired
+    private EventXmlToDomAdapter eventXmlToDomAdapter;
 
     private final HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
@@ -61,6 +70,6 @@ public class EventsProviderRepositoryImpl implements EventsProviderRepository {
     }
 
     private void processEvent(PlanList xmlEvent) {
-        System.out.println("Event: "+xmlEvent);
+        eventUsesCases.getProcessedEvent(eventXmlToDomAdapter.toDom(xmlEvent));
     }
 }
