@@ -9,12 +9,11 @@ import lombok.Data;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Output {
 
     @XmlElement(name = "base_plan")
-    private List<BasePlan> basePlans;
+    private List<BasePlan> basePlan;
 
 }

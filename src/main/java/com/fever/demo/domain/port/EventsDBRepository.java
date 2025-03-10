@@ -7,4 +7,5 @@ import java.util.List;
 public interface EventsDBRepository {
     List<EventDom> getAllEvents();
     void addNewEvents(List<EventDom> newEvents);
+    List<EventDom> getEventsFromTimeRange(String start, String end);
 }

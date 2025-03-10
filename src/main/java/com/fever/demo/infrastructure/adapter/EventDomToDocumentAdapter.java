@@ -18,13 +18,13 @@ public class EventDomToDocumentAdapter {
 
     private static BasePlanDocument basePlanDomToDocument(EventDom eventDom) {
         return new BasePlanDocument(eventDom.getBasePlanId(), eventDom.getSellMode(),
-                eventDom.getOrganizerCompanyId(), eventDom.getTitle(), eventDom.getPlans().stream().map(EventDomToDocumentAdapter::planDomToDocument).toList());
+                eventDom.getOrganizerCompanyId(), eventDom.getTitle(), eventDom.getPlan().stream().map(EventDomToDocumentAdapter::planDomToDocument).toList());
     }
 
     private static PlanDocument planDomToDocument(PlanDom planDom) {
         return new PlanDocument(planDom.getPlanStartDate(),planDom.getPlanEndDate(), planDom.getPlanId(),
                 planDom.getSellFrom(), planDom.getSellTo(), planDom.getSoldOut(),
-                planDom.getZoneDoms().stream().map(EventDomToDocumentAdapter::zoneDomToDocument).toList());
+                planDom.getZoneDom().stream().map(EventDomToDocumentAdapter::zoneDomToDocument).toList());
     }
 
     private static ZoneDocument zoneDomToDocument(ZoneDom zoneDom) {

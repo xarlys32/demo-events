@@ -10,7 +10,6 @@ import lombok.Data;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Plan {

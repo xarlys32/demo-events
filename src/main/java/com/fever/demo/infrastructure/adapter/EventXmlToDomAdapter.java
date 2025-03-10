@@ -14,12 +14,12 @@ import java.util.List;
 @Component
 public class EventXmlToDomAdapter {
     public List<EventDom> toDom(PlanList planList) {
-        return planList.getOutput().getBasePlans().stream().map(EventXmlToDomAdapter::basePlanXmlToDom).toList();
+        return planList.getOutput().getBasePlan().stream().map(EventXmlToDomAdapter::basePlanXmlToDom).toList();
     }
 
     private static EventDom basePlanXmlToDom(BasePlan basePlanXml) {
         return new EventDom(basePlanXml.getBasePlanId(), basePlanXml.getSellMode(),
-                basePlanXml.getOrganizerCompanyId(), basePlanXml.getTitle(), basePlanXml.getPlans().stream().map(EventXmlToDomAdapter::planXmlToDom).toList());
+                basePlanXml.getOrganizerCompanyId(), basePlanXml.getTitle(), basePlanXml.getPlan().stream().map(EventXmlToDomAdapter::planXmlToDom).toList());
     }
 
     private static PlanDom planXmlToDom(Plan planXml) {

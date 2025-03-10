@@ -22,7 +22,6 @@ public class EventsDBRepositroryImpl implements EventsDBRepository {
     @Autowired
     private EventDomToDocumentAdapter eventDomToDocumentAdapter;
 
-    @Override
     public List<EventDom> getAllEvents() {
         List<BasePlanDocument>  basePlanList = eventsMongoRepository.findAll();
         return eventDocumentToDomAdapter.toDom(basePlanList);
@@ -31,5 +30,10 @@ public class EventsDBRepositroryImpl implements EventsDBRepository {
     public void addNewEvents(List<EventDom> newEvents) {
         List<BasePlanDocument> newEventsDocuments = eventDomToDocumentAdapter.toDocument(newEvents);
         eventsMongoRepository.saveAll(newEventsDocuments);
+    }
+
+    public List<EventDom> getEventsFromTimeRange(String start, String end) {
+        List<BasePlanDocument> eventsDocument = eventsMongoRepository.findByPlanBaseDates(start, end);
+        return eventDocumentToDomAdapter.toDom(eventsDocument);
     }
 }

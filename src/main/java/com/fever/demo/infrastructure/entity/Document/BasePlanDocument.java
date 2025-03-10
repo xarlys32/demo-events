@@ -26,6 +26,6 @@ public class BasePlanDocument {
     private String title;
 
     @Field(name = "plan")
-    private List<PlanDocument> plans;
+    private List<PlanDocument> plan;
 
 }

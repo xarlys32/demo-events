@@ -1,4 +1,4 @@
-package com.fever.demo.domain.model;
+package com.fever.demo.infrastructure.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class EventDom {
+public class EventDTO {
     private String basePlanId;
 
     private String sellMode;
@@ -16,5 +16,5 @@ public class EventDom {
 
     private String title;
 
-    private List<PlanDom> plan;
+    private List<PlanDTO> plan;
 }

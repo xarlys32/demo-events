@@ -1,4 +1,4 @@
-package com.fever.demo.domain.model;
+package com.fever.demo.infrastructure.entity.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class PlanDom {
+public class PlanDTO {
     private String planStartDate;
 
     private String planEndDate;
@@ -21,5 +21,5 @@ public class PlanDom {
 
     private String soldOut;
 
-    private List<ZoneDom> zoneDom;
+    private List<ZoneDTO> zone;
 }

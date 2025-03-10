@@ -4,7 +4,6 @@ import jakarta.xml.bind.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
 @XmlRootElement(name = "planList")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -7,7 +7,6 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Zone {

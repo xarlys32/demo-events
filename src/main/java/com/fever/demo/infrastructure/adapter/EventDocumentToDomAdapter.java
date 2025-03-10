@@ -19,7 +19,7 @@ public class EventDocumentToDomAdapter {
     private static EventDom basePlanDocumentToDom(BasePlanDocument basePlanDocument) {
         return new EventDom(basePlanDocument.getBasePlanId(), basePlanDocument.getSellMode(),
                 basePlanDocument.getOrganizerCompanyId(), basePlanDocument.getTitle(),
-                basePlanDocument.getPlans().stream().map(EventDocumentToDomAdapter::planDocumentToDom).toList());
+                basePlanDocument.getPlan().stream().map(EventDocumentToDomAdapter::planDocumentToDom).toList());
     }
 
     private static PlanDom planDocumentToDom(PlanDocument planDocument) {
