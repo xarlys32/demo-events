@@ -1,6 +1,8 @@
 package com.fever.demo.domain.usecases;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.fever.demo.config.Constants;
+import com.fever.demo.domain.common.DateHelper;
 import com.fever.demo.domain.model.EventDom;
 import com.fever.demo.domain.port.EventsDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,20 +24,28 @@ public class EventUsesCases {
     private EventsDBRepository eventsDBRepository;
 
     public List<EventDom> findEventsFromDate(String startDate, String endDate) {
-        if(validateDates(startDate, endDate)) {
-            return getEventFromRangeDates(startDate, endDate);
+        try {
+            if (DateHelper.validateDates(startDate, endDate)) {
+                return getEventFromRangeDates(startDate, endDate);
+            }
+        } catch (DateTimeParseException ex) {
+            System.err.println(ex);
         }
         return new ArrayList<>();
     }
 
     public void getProcessedEvent(List<EventDom> eventList) {
+        try {
         List<EventDom> newEvents = findNewEventsFromXml(eventList);
         if (!newEvents.isEmpty()) {
             addNewEventsToDb(newEvents);
         }
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
     }
 
-    private List<EventDom> findNewEventsFromXml (List<EventDom> eventsFromXml) {
+    private List<EventDom> findNewEventsFromXml (List<EventDom> eventsFromXml) throws Exception{
         List<EventDom> eventsFromDb =  eventsDBRepository.getAllEvents();
         return eventsFromXml.stream().filter(eventXml -> eventsFromDb.stream().noneMatch(
                 eventDb-> eventDb.getBasePlanId().equals(eventXml.getBasePlanId()))).collect(Collectors.toList());
@@ -44,30 +55,9 @@ public class EventUsesCases {
         eventsDBRepository.addNewEvents(newEvents);
     }
 
-    private boolean validateDates(String startDate, String endDate) {
-        if(!isValidDateFormat(startDate) || !isValidDateFormat(endDate)) {
-            return false;
-        }
-        return checkIfStartDateIsPreviousToEnd(startDate, endDate);
+
+    private List<EventDom> getEventFromRangeDates(String startDate, String endDate) throws DateTimeParseException {
+        return eventsDBRepository.getEventsFromTimeRange(DateHelper.addHours(startDate,true), DateHelper.addHours(endDate, false));
     }
 
-    private boolean checkIfStartDateIsPreviousToEnd(String startDate, String endDate) {
-        LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
-        return !end.isBefore(start);
-    }
-
-    private boolean isValidDateFormat(String date) {
-        return date != null && date.matches(Constants.DATE_FORMAT);
-    }
-
-    private List<EventDom> getEventFromRangeDates(String startDate, String endDate) {
-
-        return eventsDBRepository.getEventsFromTimeRange(addHours(startDate,true), addHours(endDate, false));
-    }
-
-    private String addHours(String date, boolean isStart) {
-        LocalDate dateWithHours = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-        return isStart ? dateWithHours.atTime(0,0,1).toString() : dateWithHours.atTime(23,59,59).toString();
-    }
 }

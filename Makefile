@@ -8,7 +8,7 @@ MONGO_USER=eventsUser
 MONGO_PASS=eventsPass
 MONGO_COLLECTION=eventsTest
 
-SPRING_CONTAINER_NAME=springboot-container
+SPRING_CONTAINER_NAME=events-container
 SPRING_BUILD_CONTEXT=.
 SPRING_PORT=8080
 
