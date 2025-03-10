@@ -21,3 +21,9 @@ I couldn't have time for integrated but I have in mind to use for Springboot Eur
 or if our app is in the Cloud use Cloud Load Balancing.
 
 I add Hiraki for better performance in connections pool
+
+# Makefile
+I create file for bring the docker image of Mongo DB and configure it also for the compilation of the app and running
+
+# Test
+I add test only for the usecases
