@@ -26,7 +26,7 @@ public class BasePlan {
     private String title;
 
     @XmlElement(name = "plan")
-    private List<Plan> plans;
+    private List<Plan> plan;
 
 }
 

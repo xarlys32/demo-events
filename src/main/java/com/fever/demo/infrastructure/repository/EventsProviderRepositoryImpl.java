@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -43,6 +44,7 @@ public class EventsProviderRepositoryImpl implements EventsProviderRepository {
             .baseUrl(Constants.PROVIDER_BASE_URL).build();
 
     @Scheduled(fixedRate = 10000)
+    @Async
     public void lastEventsList() {
         webClient.get()
                 .uri(Constants.PROVIDER_EVENT_ENDPOINT)
