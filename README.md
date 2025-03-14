@@ -30,18 +30,18 @@ I add test only for the DateHelper
 
 # For a better aproach to Hexagonal Architecture
 The provided README.md file does not give a complete view of the project's structure, but based on the information given, here are some potential issues that might not align with hexagonal architecture principles:  
-Direct Integration with MongoDB:  
+## Direct Integration with MongoDB:  
  The project directly integrates with MongoDB without an abstraction layer. In hexagonal architecture, the database should be accessed through a repository interface, which is implemented by an adapter.
-System.out Logging:  
+## System.out Logging:  
  Using System.out for logging is not ideal. Hexagonal architecture encourages the use of interfaces for logging, which can be implemented by different logging frameworks.
-Lack of Clear Separation of Concerns:  
+## Lack of Clear Separation of Concerns:  
  The description does not mention clear separation between the core business logic and the infrastructure concerns (like scheduling and database access). Hexagonal architecture emphasizes separating the core application logic from external systems.
-Direct Scheduling Logic:  
+## Direct Scheduling Logic:  
  The scheduling logic to periodically get info from the endpoint and store it in MongoDB should be part of an adapter, not the core business logic.
-No Mention of Ports and Adapters:  
+## No Mention of Ports and Adapters:  
  There is no mention of using ports (interfaces) and adapters (implementations) to interact with external systems like databases, web services, etc.
-To align with hexagonal architecture, consider the following improvements:  
- Introduce Repository Interfaces: Define repository interfaces in the core domain and implement them in the infrastructure layer.  
- Use Dependency Injection: Ensure that dependencies like repositories and services are injected into the core application logic.  
- Abstract Logging: Use a logging interface and inject a logging implementation.  
- Separate Scheduling Logic: Move scheduling logic to an adapter that interacts with the core application logic through a defined interface.
+## To align with hexagonal architecture, consider the following improvements:  
+ - Introduce Repository Interfaces: Define repository interfaces in the core domain and implement them in the infrastructure layer.  
+ - Use Dependency Injection: Ensure that dependencies like repositories and services are injected into the core application logic.  
+ - Abstract Logging: Use a logging interface and inject a logging implementation.  
+ - Separate Scheduling Logic: Move scheduling logic to an adapter that interacts with the core application logic through a defined interface.
